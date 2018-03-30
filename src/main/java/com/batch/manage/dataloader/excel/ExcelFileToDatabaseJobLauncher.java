@@ -35,14 +35,14 @@ public class ExcelFileToDatabaseJobLauncher {
         this.jobLauncher = jobLauncher;
     }
 
-    @Scheduled(cron = "${excel.to.database.job.cron}")
+    /*@Scheduled(cron = "${excel.to.database.job.cron}")
     void launchXmlFileToDatabaseJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting excelFileToDatabase job");
 
         jobLauncher.run(job, newExecution());
 
         LOGGER.info("Stopping excelFileToDatabase job");
-    }
+    }*/
 
     private JobParameters newExecution() {
         Map<String, JobParameter> parameters = new HashMap<>();

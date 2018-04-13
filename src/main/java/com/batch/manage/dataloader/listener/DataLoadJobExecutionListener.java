@@ -56,8 +56,9 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 
 			jobExecution.getExecutionContext().put("data", list.get(0).getFileData());
 			jobExecution.getExecutionContext().put("fileUploadRecordId", list.get(0).getId());
-			jobExecution.getExecutionContext().put("projectId", list.get(0).getProjectId());
+			//jobExecution.getExecutionContext().put("projectId", list.get(0).getProjectId());
 			jobExecution.getExecutionContext().put("jobId", jobId);
+			jobExecution.getExecutionContext().put("parishId", 10);
 
 		} else {
 			JobExecution jobExec = jobExplorer.getJobExecution(jobId);

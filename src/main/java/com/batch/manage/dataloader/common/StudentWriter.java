@@ -21,7 +21,7 @@ public class StudentWriter implements ItemWriter<Student> {
     public void write(List<? extends Student> items) throws Exception {
         LOGGER.info("Received the information of {} students", items.size());
 
-       // items.forEach(i -> LOGGER.debug("Received the information of a student: {}", i));
+        items.forEach(i -> LOGGER.debug("Received the information of a student: {}", i));
         
         for(Student dto : items) {
         	studentDAO.save(dto);

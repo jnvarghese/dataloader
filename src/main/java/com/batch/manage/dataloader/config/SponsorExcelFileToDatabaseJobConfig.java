@@ -1,4 +1,4 @@
-package com.batch.manage.dataloader.excel;
+package com.batch.manage.dataloader.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -18,29 +18,29 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.batch.manage.dataloader.common.LoggingStudentProcessor;
-import com.batch.manage.dataloader.common.LoggingStudentWriter;
+import com.batch.manage.dataloader.common.SponsorProcessor;
+import com.batch.manage.dataloader.common.SponsorWriter;
 import com.batch.manage.dataloader.listener.DataLoadJobExecutionListener;
-import com.batch.manage.dataloader.listener.ItemReaderStepExecutionListener;
-import com.batch.manage.dataloader.model.StudentDTO;
+import com.batch.manage.dataloader.model.SponsorDTO;
+import com.batch.manage.dataloader.model.entity.Sponsor;
 import com.batch.manage.dataloader.model.entity.Student;
 
-@Configuration
-public class ExcelFileToDatabaseJobConfig {
+@Configuration	
+public class SponsorExcelFileToDatabaseJobConfig {
     
     @Bean
     @StepScope
-    ItemStreamReader<StudentDTO> excelStudentReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
-        PoiItemReader<StudentDTO> reader = new PoiItemReader<>();        
+    ItemStreamReader<SponsorDTO> excelSponsorReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
+        PoiItemReader<SponsorDTO> reader = new PoiItemReader<>();        
         reader.setLinesToSkip(1);
         reader.setInputStream(data);
         reader.setRowMapper(excelRowMapper());
         return reader;
     }
     
-    private RowMapper<StudentDTO> excelRowMapper() {
-        BeanWrapperRowMapper<StudentDTO> rowMapper = new BeanWrapperRowMapper<>();
-        rowMapper.setTargetType(StudentDTO.class);
+    private RowMapper<SponsorDTO> excelRowMapper() {
+        BeanWrapperRowMapper<SponsorDTO> rowMapper = new BeanWrapperRowMapper<>();
+        rowMapper.setTargetType(SponsorDTO.class);
         return rowMapper;
     }
 
@@ -48,50 +48,44 @@ public class ExcelFileToDatabaseJobConfig {
      * If your Excel document has no header, you have to create a custom
      * row mapper and configure it here.
      */
-    /*private RowMapper<StudentDTO> excelRowMapper() {
+    /*private RowMapper<SponsorDTO> excelRowMapper() {
        return new StudentExcelRowMapper();
     }*/
 
     @Bean
     @StepScope
-    ItemProcessor<StudentDTO, Student> excelStudentProcessor(
+    ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor(
     		@Value("#{jobExecutionContext['jobId']}") Long jobId,
-    		@Value("#{jobExecutionContext['projectId']}") Long projectId) {
-        return new LoggingStudentProcessor(jobId, projectId);
+    		@Value("#{jobExecutionContext['parishId']}") Long parishId) {
+        return new SponsorProcessor(jobId, parishId);
     }
 
     @Bean
-    ItemWriter<Student> excelStudentWriter() {
-        return new LoggingStudentWriter();
+    ItemWriter<Sponsor> excelSponsorWriter() {
+        return new SponsorWriter();
     }
     
-    @Bean
-    ItemReaderStepExecutionListener itemReaderStepExcutionListner() {
-    	return new ItemReaderStepExecutionListener();
-    }
-
     @Bean
     DataLoadJobExecutionListener dataLoadJobExecutionListener() {
     	return new DataLoadJobExecutionListener();    	
     }
     @Bean
-    Step excelFileToDatabaseStep(ItemReader<StudentDTO> excelStudentReader,
-                                 ItemProcessor<StudentDTO, Student> excelStudentProcessor,
-                                 ItemWriter<Student> excelStudentWriter,
+    Step sponsorExcelFileToDatabaseStep(ItemReader<SponsorDTO> excelSponsorReader,
+                                 ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor,
+                                 ItemWriter<Sponsor> excelSponsorWriter,
                                  StepBuilderFactory stepBuilderFactory) {
-        return stepBuilderFactory.get("excelFileToDatabaseStep")
-        		.<StudentDTO, Student>chunk(1)
-                .reader(excelStudentReader)
-                .processor(excelStudentProcessor)
-                .writer(excelStudentWriter)
-                .listener(itemReaderStepExcutionListner())
+        return stepBuilderFactory.get("sponsorExcelFileToDatabaseStep")
+        		.<SponsorDTO, Sponsor>chunk(5)
+                .reader(excelSponsorReader)
+                .processor(excelSponsorProcessor)
+                .writer(excelSponsorWriter)                
                 .build();
     }
 
     @Bean
-    Job excelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
-                               @Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
-        return jobBuilderFactory.get("excelFileToDatabaseJob")
+    Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
+                               @Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
+        return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(dataLoadJobExecutionListener())
                 .flow(excelStudentStep)

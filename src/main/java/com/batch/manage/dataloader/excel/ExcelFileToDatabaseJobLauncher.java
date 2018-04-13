@@ -29,12 +29,18 @@ public class ExcelFileToDatabaseJobLauncher {
 
     private final JobLauncher jobLauncher;
 
-    @Autowired
+    /*@Autowired
     ExcelFileToDatabaseJobLauncher(@Qualifier("excelFileToDatabaseJob") Job job, JobLauncher jobLauncher) {
         this.job = job;
         this.jobLauncher = jobLauncher;
+    }*/
+    
+    @Autowired
+    ExcelFileToDatabaseJobLauncher(@Qualifier("sponsorExcelFileToDatabaseJob") Job job, JobLauncher jobLauncher) {
+        this.job = job;
+        this.jobLauncher = jobLauncher;
     }
-
+    
     /*@Scheduled(cron = "${excel.to.database.job.cron}")
     void launchXmlFileToDatabaseJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         LOGGER.info("Starting excelFileToDatabase job");

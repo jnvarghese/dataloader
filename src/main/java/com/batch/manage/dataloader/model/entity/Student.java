@@ -19,6 +19,9 @@ public class Student {
 	@Column(name="studentname")
 	private String studentName;
 	
+	@Column(name="studentcode")
+	private String studentCode;
+	
 	private String gender;
 	
 	private String grade;
@@ -52,6 +55,15 @@ public class Student {
 	
 	@Column(name="recentachivements")
 	private String recentAchivements;
+	
+
+	public String getStudentCode() {
+		return studentCode;
+	}
+
+	public void setStudentCode(String studentCode) {
+		this.studentCode = studentCode;
+	}
 
 	public Long getId() {
 		return id;

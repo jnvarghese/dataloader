@@ -39,8 +39,8 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		Long recordId = (Long) jobExecution.getExecutionContext().get("fileUploadRecordId");
 		FileUpload fp = fileUploadDAO.findOne(recordId);
 		if (null != fp) {
-			fp.setBatchExecutionStatus(1);
-			fileUploadDAO.save(fp);
+			//fp.setBatchExecutionStatus(1);
+			//fileUploadDAO.save(fp);
 		}
 	}
 

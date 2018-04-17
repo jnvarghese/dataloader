@@ -37,11 +37,11 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     	e.setEmailAddress(dto.getEmail1());
     	
     	if("&".equalsIgnoreCase(dto.getMi())) {
-    		String[] names = null;
+    		String[] names;
     		if(dto.getFirstName().contains(" ")) {
     			names = dto.getFirstName().split(" ");
     		}else {
-    			names = new String[0];
+    			names = new String[2];
     			names[0] = dto.getFirstName();
     			names[1] = "N/A";
     		}

@@ -2,7 +2,7 @@ package com.batch.manage.dataloader.model;
 
 public class StudentDTO {
 	
-	private String id;
+	private String studentId;
 	
 	private String nameOfChild;
 	
@@ -34,13 +34,17 @@ public class StudentDTO {
 	
 	private String addLinkForPicture;
 
-	public String getId() {
-		return id;
+	
+	
+
+	public String getStudentId() {
+		return studentId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
+
 	public String getGender() {
 		return gender;
 	}

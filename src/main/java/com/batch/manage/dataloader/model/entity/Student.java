@@ -53,9 +53,21 @@ public class Student {
 	
 	private String talent;
 	
+	@Column(name="createdby")
+	private Long createdBy;
+	
 	@Column(name="recentachivements")
 	private String recentAchivements;
 	
+
+	
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	public String getStudentCode() {
 		return studentCode;

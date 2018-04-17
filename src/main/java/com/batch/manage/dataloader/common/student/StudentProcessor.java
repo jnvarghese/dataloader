@@ -30,7 +30,7 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     @Override
     public Student process(StudentDTO dto) throws Exception {
         Student item = new Student();
-        item.setStudentCode(dto.getId().split("-")[2]);
+        item.setStudentCode(dto.getStudentId().split("-")[2]);
         item.setProjectId(this.projectId);
         item.setJobId(this.jobId);
     	item.setAddress(dto.getAddress());
@@ -53,6 +53,7 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     	item.setRecentAchivements(dto.getRecentAchivements());
     	item.setStudentName(dto.getNameOfChild());
     	item.setTalent(dto.getTalent());    
+    	item.setCreatedBy(1L);
         return item;
     }
     

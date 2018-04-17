@@ -28,8 +28,8 @@ import com.batch.manage.dataloader.model.entity.Student;
 //@Configuration	
 public class SponsorExcelFileToDatabaseJobConfig {
     
-    //@Bean
-    //@StepScope
+   // @Bean
+   // @StepScope
     ItemStreamReader<SponsorDTO> excelSponsorReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
         PoiItemReader<SponsorDTO> reader = new PoiItemReader<>();        
         reader.setLinesToSkip(1);
@@ -52,8 +52,8 @@ public class SponsorExcelFileToDatabaseJobConfig {
        return new StudentExcelRowMapper();
     }*/
 
-   // @Bean
-   // @StepScope
+   //@Bean
+  // @StepScope
     ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor(
     		@Value("#{jobExecutionContext['jobId']}") Long jobId,
     		@Value("#{jobExecutionContext['parishId']}") Long parishId) {
@@ -65,11 +65,11 @@ public class SponsorExcelFileToDatabaseJobConfig {
         return new SponsorWriter();
     }
     
-    //@Bean
+   // @Bean
     DataLoadJobExecutionListener dataLoadJobExecutionListener() {
     	return new DataLoadJobExecutionListener();    	
     }
-    //@Bean
+   // @Bean
     Step sponsorExcelFileToDatabaseStep(ItemReader<SponsorDTO> excelSponsorReader,
                                  ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor,
                                  ItemWriter<Sponsor> excelSponsorWriter,
@@ -82,7 +82,7 @@ public class SponsorExcelFileToDatabaseJobConfig {
                 .build();
     }
 
-   // @Bean
+  // @Bean
     Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
                                @Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
         return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob")

@@ -2,11 +2,16 @@ package com.batch.manage.dataloader.model.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
 
 @Entity
 public class Sponsor {
@@ -14,6 +19,9 @@ public class Sponsor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@OneToOne(mappedBy = "spn", cascade = CascadeType.ALL)
+	private Enrollment ern;
 	
 	@Column(name="parishid")
 	private Long parishId;
@@ -81,8 +89,27 @@ public class Sponsor {
 	@Column(name="jobid")
 	private Long jobId;
 
+	private String phone1;
+	
+	private String phone2;
 	
 	
+	public String getPhone1() {
+		return phone1;
+	}
+
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
+	}
+
+	public String getPhone2() {
+		return phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+
 	public Long getJobId() {
 		return jobId;
 	}
@@ -275,19 +302,14 @@ public class Sponsor {
 		this.updatedDate = updatedDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Sponsor [id=" + id + ", parishId=" + parishId + ", sponsorCode=" + sponsorCode + ", firstName="
-				+ firstName + ", middleInitial=" + middleInitial + ", lastName=" + lastName + ", nickName=" + nickName
-				+ ", dayOfBirth=" + dayOfBirth + ", monthOfBirth=" + monthOfBirth + ", sponsorStatus=" + sponsorStatus
-				+ ", emailAddress=" + emailAddress + ", emailAddress2=" + emailAddress2 + ", transactionRemarks="
-				+ transactionRemarks + ", createdBy=" + createdBy + ", appartmentNumber=" + appartmentNumber
-				+ ", street=" + street + ", city=" + city + ", state=" + state + ", postalCode=" + postalCode
-				+ ", hasAnyCoSponser=" + hasAnyCoSponser + ", coSponserName=" + coSponserName + ", createdDate="
-				+ createdDate + ", updatedDate=" + updatedDate + ", jobId=" + jobId + "]";
+	public Enrollment getErn() {
+		return ern;
 	}
-	
-	
-	
+
+	public void setErn(Enrollment ern) {
+		this.ern = ern;
+	}
+
+
 	
 }

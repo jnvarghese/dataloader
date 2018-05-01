@@ -109,7 +109,7 @@ public class EnrollmentProcessor implements ItemProcessor<EnrollmentDTO, Enrollm
 					e.setJobId(jobId);
 					e.setEffectiveDate(new Date(Long.valueOf(dto.getDate())));
 					e.setPaymentDate(new Date(Long.valueOf(dto.getDate())));
-					e.setSponsorId(sponsor.getId());
+					//e.setSponsorId(sponsor.getId());
 					e.setMiscAmount(0);						
 					e.setSponsees(sponsees);							
 					e.setStudentMaxOuts(studentMaxOuts);
@@ -124,7 +124,7 @@ public class EnrollmentProcessor implements ItemProcessor<EnrollmentDTO, Enrollm
 					e.setJobId(jobId);
 					e.setEffectiveDate(new Date(Long.valueOf(dto.getDate())));
 					e.setPaymentDate(new Date(Long.valueOf(dto.getDate())));
-					e.setSponsorId(sponsor.getId());
+					//e.setSponsorId(sponsor.getId());
 					e.setMiscAmount(0);			
 					
 					sponsees.add(new Sponsee(e,  getMonth(dto.getMonth()), Integer.valueOf(dto.getYear().split("\\.")[0]), student.getId()));

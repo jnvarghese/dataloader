@@ -19,8 +19,8 @@ public class Student {
 	@Column(name="studentname")
 	private String studentName;
 	
-	@Column(name="studentcode")
-	private String studentCode;
+	//@Column(name="studentcode")
+	//private String studentCode;
 	
 	private String gender;
 	
@@ -68,7 +68,7 @@ public class Student {
 	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
-
+/*
 	public String getStudentCode() {
 		return studentCode;
 	}
@@ -76,7 +76,7 @@ public class Student {
 	public void setStudentCode(String studentCode) {
 		this.studentCode = studentCode;
 	}
-
+*/
 	public Long getId() {
 		return id;
 	}
@@ -203,6 +203,15 @@ public class Student {
 
 	public void setJobId(Long jobId) {
 		this.jobId = jobId;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", projectId=" + projectId + ", studentName=" + studentName + ", gender=" + gender
+				+ ", grade=" + grade + ", favColor=" + favColor + ", favGame=" + favGame + ", nameOfGuardian="
+				+ nameOfGuardian + ", occupationOfGuardian=" + occupationOfGuardian + ", baseLanguage=" + baseLanguage
+				+ ", dateOfBirth=" + dateOfBirth + ", jobId=" + jobId + ", address=" + address + ", hobbies=" + hobbies
+				+ ", talent=" + talent + ", createdBy=" + createdBy + ", recentAchivements=" + recentAchivements + "]";
 	}	
 	
 }

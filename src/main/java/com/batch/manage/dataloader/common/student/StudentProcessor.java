@@ -29,13 +29,17 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
 
     @Override
     public Student process(StudentDTO dto) throws Exception {
+    	
+    	LOGGER.info("Processing the information of {} student", dto);
         Student item = new Student();
-        item.setStudentCode(dto.getStudentId().split("-")[2]);
+        //item.setStudentCode(dto.getStudentId().split("-")[2]);
         item.setProjectId(this.projectId);
         item.setJobId(this.jobId);
     	item.setAddress(dto.getAddress());
     	item.setBaseLanguage(dto.getMotherTongue());
-    	item.setDateOfBirth(df.format(new Date(Long.valueOf(dto.getDateOfBirth()))));
+    	if(null != dto.getDateOfBirth() || !dto.getDateOfBirth().isEmpty() || !"".equals(dto.getDateOfBirth().trim())) {
+	    	item.setDateOfBirth(df.format(new Date(Long.valueOf(dto.getDateOfBirth()))));
+	    }
     	item.setFavColor(dto.getFavoriteColor());
     	item.setFavGame(dto.getFavoriteGame());
     	if("MALE".equalsIgnoreCase(dto.getGender())) {
@@ -46,7 +50,12 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     		LOGGER.warn(" Invalid gender {} for child {} , refer job {}", dto.getGender(), dto.getNameOfChild(), this.jobId);
     		item.setGender("F");
     	}
-    	item.setGrade(dto.getGrade());
+    	if(dto.getGrade().contains(".")) {
+    		item.setGrade(dto.getGrade().split("\\.")[0]);
+    	}else {
+    		item.setGrade(dto.getGrade());
+    	}
+    	
     	item.setHobbies(dto.getHobby());
     	item.setNameOfGuardian(dto.getNameOfParent());
     	item.setOccupationOfGuardian(dto.getOccupationOfParent());

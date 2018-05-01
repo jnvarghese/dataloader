@@ -20,6 +20,7 @@ public class SponsorMaxout {
 	
 	@Column(name = "sponsorid")
 	private Long sponsorId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enrollmentid", nullable = false)
 	private Enrollment enrollment;
@@ -52,9 +53,9 @@ public class SponsorMaxout {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public SponsorMaxout(Long sponsorId, Enrollment enrollment, Date maxOut) {
+	public SponsorMaxout(Enrollment enrollment, Date maxOut) {
 		super();
-		this.sponsorId = sponsorId;
+		this.sponsorId = enrollment.getSpn().getId();
 		this.enrollment = enrollment;
 		this.maxOut = maxOut;
 	}

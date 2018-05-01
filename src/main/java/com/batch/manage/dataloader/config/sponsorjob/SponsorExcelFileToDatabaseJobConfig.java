@@ -25,11 +25,11 @@ import com.batch.manage.dataloader.model.SponsorDTO;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 import com.batch.manage.dataloader.model.entity.Student;
 
-//@Configuration	
+@Configuration	
 public class SponsorExcelFileToDatabaseJobConfig {
     
-   // @Bean
-   // @StepScope
+   @Bean
+   @StepScope
     ItemStreamReader<SponsorDTO> excelSponsorReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
         PoiItemReader<SponsorDTO> reader = new PoiItemReader<>();        
         reader.setLinesToSkip(1);
@@ -52,37 +52,37 @@ public class SponsorExcelFileToDatabaseJobConfig {
        return new StudentExcelRowMapper();
     }*/
 
-   //@Bean
-  // @StepScope
+   @Bean
+  @StepScope
     ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor(
     		@Value("#{jobExecutionContext['jobId']}") Long jobId,
     		@Value("#{jobExecutionContext['parishId']}") Long parishId) {
         return new SponsorProcessor(jobId, parishId);
     }
 
-    //@Bean
+    @Bean
     ItemWriter<Sponsor> excelSponsorWriter() {
         return new SponsorWriter();
     }
     
-   // @Bean
+   @Bean
     DataLoadJobExecutionListener dataLoadJobExecutionListener() {
     	return new DataLoadJobExecutionListener();    	
     }
-   // @Bean
+   @Bean
     Step sponsorExcelFileToDatabaseStep(ItemReader<SponsorDTO> excelSponsorReader,
                                  ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor,
                                  ItemWriter<Sponsor> excelSponsorWriter,
                                  StepBuilderFactory stepBuilderFactory) {
         return stepBuilderFactory.get("sponsorExcelFileToDatabaseStep")
-        		.<SponsorDTO, Sponsor>chunk(5)
+        		.<SponsorDTO, Sponsor>chunk(1)
                 .reader(excelSponsorReader)
                 .processor(excelSponsorProcessor)
                 .writer(excelSponsorWriter)                
                 .build();
     }
 
-  // @Bean
+  @Bean
     Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
                                @Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
         return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob")

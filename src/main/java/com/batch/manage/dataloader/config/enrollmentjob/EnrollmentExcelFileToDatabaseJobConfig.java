@@ -24,11 +24,11 @@ import com.batch.manage.dataloader.listener.DataLoadJobExecutionListener;
 import com.batch.manage.dataloader.model.EnrollmentDTO;
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
 
-@Configuration	
+//@Configuration	
 public class EnrollmentExcelFileToDatabaseJobConfig {
 
-	 @Bean
-	    @StepScope
+	 //@Bean
+	    //@StepScope
 	    ItemStreamReader<EnrollmentDTO> excelEnrollmentReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
 	        PoiItemReader<EnrollmentDTO> reader = new PoiItemReader<>();        
 	        reader.setLinesToSkip(1);
@@ -51,23 +51,23 @@ public class EnrollmentExcelFileToDatabaseJobConfig {
 	       return new StudentExcelRowMapper();
 	    }*/
 
-	    @Bean
-	    @StepScope
+	   // @Bean
+	  //  @StepScope
 	    ItemProcessor<EnrollmentDTO, Enrollment> excelEnrollmentProcessor(
 	    		@Value("#{jobExecutionContext['jobId']}") Long jobId) {
 	        return new EnrollmentProcessor(jobId);
 	    }
 
-	    @Bean
+	   //// @Bean
 	    ItemWriter<Enrollment> excelEnrollmentWriter() {
 	        return new EnrollmentWritter();
 	    }
 	    
-	    @Bean
+	   //// @Bean
 	    DataLoadJobExecutionListener dataLoadJobExecutionListener() {
 	    	return new DataLoadJobExecutionListener();    	
 	    }
-	    @Bean
+	   // @Bean
 	    Step sponsorExcelFileToDatabaseStep(ItemReader<EnrollmentDTO> excelEnrollmentReader,
 	                                 ItemProcessor<EnrollmentDTO, Enrollment> excelEnrollmentProcessor,
 	                                 ItemWriter<Enrollment> excelEnrollmentWriter,
@@ -80,7 +80,7 @@ public class EnrollmentExcelFileToDatabaseJobConfig {
 	                .build();
 	    }
 
-	    @Bean
+	   // @Bean
 	    Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
 	                               @Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
 	        return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob")

@@ -11,7 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.batch.manage.dataloader.model.entity.Sponsor;
+
+
 
 @Entity
 public class Enrollment {
@@ -23,8 +29,11 @@ public class Enrollment {
 	@Column(name="jobid")
 	private Long jobId;
 	
-	@Column(name="sponsorid")
-	private Long sponsorId;
+	@OneToOne()
+	@JoinColumn(name = "sponsorid")
+	private Sponsor spn;
+	//@Column(name="sponsorid")
+	//private Long sponsorId;
 	
 	@Column(name="paymentdate")
 	private Date paymentDate;
@@ -72,12 +81,15 @@ public class Enrollment {
 		this.id = id;
 	}
 
-	public Long getSponsorId() {
-		return sponsorId;
+	
+
+
+	public Sponsor getSpn() {
+		return spn;
 	}
 
-	public void setSponsorId(Long sponsorId) {
-		this.sponsorId = sponsorId;
+	public void setSpn(Sponsor spn) {
+		this.spn = spn;
 	}
 
 	public Date getPaymentDate() {
@@ -144,19 +156,5 @@ public class Enrollment {
 		this.studentMaxOuts = studentMaxOuts;
 	}
 
-	@Override
-	public String toString() {
-		return "Enrollment [id=" + id + ", jobId=" + jobId + ", sponsorId=" + sponsorId + ", paymentDate=" + paymentDate
-				+ ", effectiveDate=" + effectiveDate + ", contributionAmount=" + contributionAmount + ", miscAmount="
-				+ miscAmount + ", createdBy=" + createdBy + ", sponsees=" + sponsees + ", sponsorMaxOuts="
-				+ sponsorMaxOuts + ", studentMaxOuts=" + studentMaxOuts + ", getJobId()=" + getJobId() + ", getId()="
-				+ getId() + ", getSponsorId()=" + getSponsorId() + ", getPaymentDate()=" + getPaymentDate()
-				+ ", getEffectiveDate()=" + getEffectiveDate() + ", getContributionAmount()=" + getContributionAmount()
-				+ ", getMiscAmount()=" + getMiscAmount() + ", getCreatedBy()=" + getCreatedBy() + ", getSponsees()="
-				+ getSponsees() + ", getSponsorMaxOuts()=" + getSponsorMaxOuts() + ", getStudentMaxOuts()="
-				+ getStudentMaxOuts() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
-	}
-	
 
 }

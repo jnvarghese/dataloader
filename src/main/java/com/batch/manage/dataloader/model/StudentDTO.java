@@ -166,6 +166,16 @@ public class StudentDTO {
 	public void setProjectLocation(String projectLocation) {
 		this.projectLocation = projectLocation;
 	}
+
+	@Override
+	public String toString() {
+		return "StudentDTO [studentId=" + studentId + ", nameOfChild=" + nameOfChild + ", gender=" + gender + ", grade="
+				+ grade + ", favoriteColor=" + favoriteColor + ", favoriteGame=" + favoriteGame + ", nameOfParent="
+				+ nameOfParent + ", occupationOfParent=" + occupationOfParent + ", motherTongue=" + motherTongue
+				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", hobby=" + hobby + ", projectLocation="
+				+ projectLocation + ", talent=" + talent + ", recentAchivements=" + recentAchivements
+				+ ", addLinkForPicture=" + addLinkForPicture + "]";
+	}
 	  
     
 }

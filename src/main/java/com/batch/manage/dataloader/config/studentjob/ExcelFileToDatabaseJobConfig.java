@@ -27,13 +27,13 @@ import com.batch.manage.dataloader.model.entity.Student;
 //@Configuration	
 public class ExcelFileToDatabaseJobConfig {
     
-  // @Bean
-   //@StepScope
+  //@Bean
+  // @StepScope
     ItemStreamReader<StudentDTO> excelStudentReader(@Value("#{jobExecutionContext['data']}") byte[] data) {
         PoiItemReader<StudentDTO> reader = new PoiItemReader<>();        
         reader.setLinesToSkip(1);
+       // reader.setInputStream(data);
         reader.setInputStream(data);
-       // reader.setResource(inputStream);
         reader.setRowMapper(excelRowMapper());
         return reader;
     }
@@ -65,7 +65,7 @@ public class ExcelFileToDatabaseJobConfig {
         return new StudentWriter();
     }
     
-  //@Bean
+ // @Bean
     DataLoadJobExecutionListener dataLoadJobExecutionListener() {
     	return new DataLoadJobExecutionListener();    	
     }
@@ -82,7 +82,7 @@ public class ExcelFileToDatabaseJobConfig {
                 .build();
     }
 
-    //@Bean
+   // @Bean
     Job excelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
                                @Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
         return jobBuilderFactory.get("excelFileToDatabaseJob")

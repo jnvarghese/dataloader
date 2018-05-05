@@ -1,6 +1,8 @@
 package com.batch.manage.dataloader.model.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
+import com.batch.manage.dataloader.model.entity.enrollment.SponsorMaxout;
 
 @Entity
 public class Sponsor {
@@ -22,6 +26,11 @@ public class Sponsor {
 	
 	@OneToOne(mappedBy = "spn", cascade = CascadeType.ALL)
 	private Enrollment ern;
+	
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "spnMax")
+	private Set<SponsorMaxout> sponsorMaxOuts  = new HashSet<>();
 	
 	@Column(name="parishid")
 	private Long parishId;
@@ -94,6 +103,16 @@ public class Sponsor {
 	private String phone2;
 	
 	
+	
+	
+	public Set<SponsorMaxout> getSponsorMaxOuts() {
+		return sponsorMaxOuts;
+	}
+
+	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
+		this.sponsorMaxOuts = sponsorMaxOuts;
+	}
+
 	public String getPhone1() {
 		return phone1;
 	}

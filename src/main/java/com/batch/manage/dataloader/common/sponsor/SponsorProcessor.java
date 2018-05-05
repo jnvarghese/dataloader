@@ -50,7 +50,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     	
     	Set<SponsorMaxout> sponsorMaxOuts  = new HashSet<>();
 		
-		Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
+		
     	sponsor.setAppartmentNumber(null);
     	sponsor.setCity(dto.getCity());
     	
@@ -118,6 +118,9 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     	sponsor.setTransactionRemarks(dto.getTransaction());
     	
     	Enrollment enrollment =  getEnrollment(dto, sponsor);
+    	
+    	sponsorMaxOuts.add(new SponsorMaxout(sponsor, enrollment, enrollment.getLocalExpDate()));
+    	sponsor.setSponsorMaxOuts(sponsorMaxOuts);			
     	sponsor.setErn(enrollment);
 		
       return sponsor;
@@ -126,44 +129,52 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     private Enrollment getEnrollment(SponsorDTO dto, Sponsor sponsor) {
     	List<StudentId> studentIds = new ArrayList<StudentId>();
     	Set<Sponsee> sponsees  = new HashSet<>();
-    	Set<SponsorMaxout> sponsorMaxOuts  = new HashSet<>();
+    	
 		
 		Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
     	Enrollment en = new Enrollment();
 
     	String studentCount = "1";
-		if(null != dto.getTotal() && dto.getTotal().contains(".")) {
-			studentCount = dto.getTotal().split("\\.")[0];
-			studentIds = studentIdDAO.list(this.parishId, Integer.valueOf(studentCount));			
-		}
-		
+		if(dto.getTotal().contains(".")) {
+			studentCount = dto.getTotal().split("\\.")[0];			
+		}    	
 		double contribution = Double.valueOf(dto.getAmount().replace("$", ""));
 		int noOfChild = Integer.valueOf(studentCount);
 		double perChildContribution = contribution/noOfChild;
 		double reminderContributionPerChild = perChildContribution % 20;
 		double totalReminder = reminderContributionPerChild * noOfChild;
-		int maxMonth = (int) (perChildContribution/20);
-		
+		int maxMonth = (int) (perChildContribution/20);		
+		//int expMonth = maxMonth / noOfChild;
+		System.out.println( " -- expMonth  "+maxMonth);
 		Calendar myCal = Calendar.getInstance();
 		
+		//2/1/2018  --dto.getDate()
 		Date sponsorDate = new Date(Long.valueOf(dto.getDate()));
-		myCal.setTime(sponsorDate);	
+		myCal.setTime(sponsorDate);
 		
 		myCal.add(Calendar.MONTH, 1);
+		//2018-03-01 00:00:00 --effectiveDate
 		Date effectiveDate = myCal.getTime();
 		
-		myCal.add(Calendar.MONTH, maxMonth+1);
+		myCal.add(Calendar.MONTH, maxMonth-1);
+		//2018-02-01 00:00:00 --expirationDate
 		Date expirationDate = myCal.getTime();
+		
+		//01  -- month
 		int month = myCal.get(Calendar.MONTH);
 		int year = myCal.get(Calendar.YEAR);
 		
+		if(null != dto.getTotal() && dto.getTotal().contains(".")) {				
+			studentIds = studentIdDAO.list(this.parishId, Integer.valueOf(studentCount));		
+			System.out.println( " studentIds "+studentIds);
+		}
+		
 		for(StudentId s : studentIds) {		
-		    sponsees.add(new Sponsee(en,  month, year, s.getId()));
+		    sponsees.add(new Sponsee(en,  month+1, year, s.getId()));
 		    studentMaxOuts.add(new StudentMaxout(s.getId(), en, expirationDate));
 		}
 
-		//sponsorMaxOuts.add(new SponsorMaxout(en, expirationDate));
-		//en.setSponsorMaxOuts(sponsorMaxOuts);			
+		en.setLocalExpDate(expirationDate); // just to pass the value back - a place holder
 		en.setSpn(sponsor);
 		en.setContributionAmount(contribution);
 		en.setCreatedBy(2L);

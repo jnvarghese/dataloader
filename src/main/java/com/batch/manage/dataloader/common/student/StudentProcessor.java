@@ -63,6 +63,7 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     	item.setStudentName(dto.getNameOfChild());
     	item.setTalent(dto.getTalent());    
     	item.setCreatedBy(1L);
+    	item.setImageLinkRef(dto.getAddLinkForPicture());
         return item;
     }
     

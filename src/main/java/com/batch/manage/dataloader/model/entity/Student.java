@@ -59,7 +59,8 @@ public class Student {
 	@Column(name="recentachivements")
 	private String recentAchivements;
 	
-
+	@Column(name="imagelinkref")
+	private String imageLinkRef;
 	
 	public Long getCreatedBy() {
 		return createdBy;
@@ -203,6 +204,15 @@ public class Student {
 
 	public void setJobId(Long jobId) {
 		this.jobId = jobId;
+	}
+
+	
+	public String getImageLinkRef() {
+		return imageLinkRef;
+	}
+
+	public void setImageLinkRef(String imageLinkRef) {
+		this.imageLinkRef = imageLinkRef;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.batch.manage.dataloader.model.entity.Sponsor;
 
@@ -58,13 +59,21 @@ public class Enrollment {
 	@OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "enrollment")
-	private Set<SponsorMaxout> sponsorMaxOuts  = new HashSet<>();
-	
-	@OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "enrollment")
 	private Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
 	
+	@Transient
+	private Date localExpDate;
+	
+	
+	
+	public Date getLocalExpDate() {
+		return localExpDate;
+	}
+
+	public void setLocalExpDate(Date localExpDate) {
+		this.localExpDate = localExpDate;
+	}
+
 	public Long getJobId() {
 		return jobId;
 	}
@@ -138,14 +147,6 @@ public class Enrollment {
 
 	public void setSponsees(Set<Sponsee> sponsees) {
 		this.sponsees = sponsees;
-	}
-
-	public Set<SponsorMaxout> getSponsorMaxOuts() {
-		return sponsorMaxOuts;
-	}
-
-	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
-		this.sponsorMaxOuts = sponsorMaxOuts;
 	}
 
 	public Set<StudentMaxout> getStudentMaxOuts() {

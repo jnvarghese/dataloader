@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.batch.manage.dataloader.model.entity.Sponsor;
+
 @Entity
 public class SponsorMaxout {
 
@@ -18,8 +20,9 @@ public class SponsorMaxout {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "sponsorid")
-	private Long sponsorId;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sponsorid", nullable = false)
+	private Sponsor spnMax;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enrollmentid", nullable = false)
@@ -28,13 +31,13 @@ public class SponsorMaxout {
 	private Long enrollmentId;*/
 	@Column(name = "maxout")
 	private Date maxOut;
-	public Long getSponsorId() {
-		return sponsorId;
-	}
-	public void setSponsorId(Long sponsorId) {
-		this.sponsorId = sponsorId;
-	}
 	
+	public Sponsor getSpnMax() {
+		return spnMax;
+	}
+	public void setSpnMax(Sponsor spnMax) {
+		this.spnMax = spnMax;
+	}
 	public Enrollment getEnrollment() {
 		return enrollment;
 	}
@@ -53,16 +56,20 @@ public class SponsorMaxout {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public SponsorMaxout(Enrollment enrollment, Date maxOut) {
+	
+	
+	public SponsorMaxout(Sponsor spnMax, Enrollment enrollment, Date maxOut) {
 		super();
-		this.sponsorId = enrollment.getSpn().getId();
+		this.spnMax = spnMax;
 		this.enrollment = enrollment;
 		this.maxOut = maxOut;
 	}
 	@Override
 	public String toString() {
-		return "SponsorMaxout [id=" + id + ", sponsorId=" + sponsorId +  ", maxOut="
-				+ maxOut + "]";
+		return "SponsorMaxout [id=" + id + ", spnMax=" + spnMax + ", enrollment=" + enrollment + ", maxOut=" + maxOut
+				+ "]";
 	}
+	
+	
 	
 }

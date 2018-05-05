@@ -62,8 +62,8 @@ public class EnrollmentProcessor implements ItemProcessor<EnrollmentDTO, Enrollm
 		
 				String[] sponsors = dto.getSponsorId().split("-");
 				sponsor =  sponsorIdDAO.findOne(sponsors[0], sponsors[1], sponsors[2], sponsors[3]);
-				sponsorMaxOuts.add(new SponsorMaxout(sponsor.getId(), e, maxOut.getTime()));
-				e.setSponsorMaxOuts(sponsorMaxOuts);			
+				//sponsorMaxOuts.add(new SponsorMaxout(sponsor.getId(), e, maxOut.getTime()));
+				//e.setSponsorMaxOuts(sponsorMaxOuts);			
 				
 				if(!dto.getTotal().equals("1.0")) {
 					List<String> sList = new ArrayList<String>();

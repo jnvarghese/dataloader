@@ -8,21 +8,22 @@ import javax.persistence.Id;
 public class FileUpload {
 
 	@Id
-	Long id;
+	private Long id;
 	
-	@Column(name="agencyid")
-	Long agencyId;
-	
-	@Column(name="projectid")
-	Long projectId;
+	@Column(name="referenceid")
+	private Long referenceId;
 	
 	@Column(name="filename")
-	String fileName;
+	private String fileName;
 	
 	@Column(name="filedata")
-	byte[] fileData;
+	private byte[] fileData;
 	
-	String status;
+	private String status;
+	
+	private String type;
+	
+	private String uploaduri;
 	
 	@Column(name="batchexecutionstatus")
 	int batchExecutionStatus;
@@ -35,20 +36,12 @@ public class FileUpload {
 		this.id = id;
 	}
 
-	public Long getAgencyId() {
-		return agencyId;
+	public Long getReferenceId() {
+		return referenceId;
 	}
 
-	public void setAgencyId(Long agencyId) {
-		this.agencyId = agencyId;
-	}
-
-	public Long getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
+	public void setReferenceId(Long referenceId) {
+		this.referenceId = referenceId;
 	}
 
 	public String getFileName() {
@@ -75,6 +68,22 @@ public class FileUpload {
 		this.status = status;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getUploaduri() {
+		return uploaduri;
+	}
+
+	public void setUploaduri(String uploaduri) {
+		this.uploaduri = uploaduri;
+	}
+
 	public int getBatchExecutionStatus() {
 		return batchExecutionStatus;
 	}
@@ -82,6 +91,8 @@ public class FileUpload {
 	public void setBatchExecutionStatus(int batchExecutionStatus) {
 		this.batchExecutionStatus = batchExecutionStatus;
 	}
+
+	
 	
 	
 	

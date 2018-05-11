@@ -1,6 +1,5 @@
 package com.batch.manage.dataloader.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;

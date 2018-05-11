@@ -86,11 +86,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     	if(null != dto.getZip()) {
     		if(dto.getZip().contains(".")) {
     			String[] zips = dto.getZip().split("\\.");
-    			System.out.println( " -- -zips --"+zips.length);
-    			for( String a: zips) {
-    				System.out.println( "  --------  "+ a);
-    			}
-    			if(zips[0].length() < 5) {
+       			if(zips[0].length() < 5) {
     				sponsor.setPostalCode(0+zips[0]);
     			}else {
     				sponsor.setPostalCode(zips[0]);
@@ -145,7 +141,6 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		double totalReminder = reminderContributionPerChild * noOfChild;
 		int maxMonth = (int) (perChildContribution/20);		
 		//int expMonth = maxMonth / noOfChild;
-		System.out.println( " -- expMonth  "+maxMonth);
 		Calendar myCal = Calendar.getInstance();
 		
 		//2/1/2018  --dto.getDate()
@@ -166,7 +161,6 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		
 		if(null != dto.getTotal() && dto.getTotal().contains(".")) {				
 			studentIds = studentIdDAO.list(this.parishId, Integer.valueOf(studentCount));		
-			System.out.println( " studentIds "+studentIds);
 		}
 		
 		for(StudentId s : studentIds) {		

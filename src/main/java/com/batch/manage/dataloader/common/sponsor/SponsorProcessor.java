@@ -15,6 +15,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.batch.manage.dataloader.model.SponsorDTO;
+import com.batch.manage.dataloader.model.entity.Receipt;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 import com.batch.manage.dataloader.model.entity.StudentId;
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
@@ -30,13 +31,17 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     
     private Long jobId;
     private Long parishId;
+    private String parish;
+    private String mission;
     
     @Autowired
     private StudentIdDAO studentIdDAO;
     
-	public SponsorProcessor(Long jobId, Long parishId) {
+	public SponsorProcessor(Long jobId, Long parishId, String parish, String mission) {
 		this.jobId =jobId;
 		this.parishId = parishId;
+		this.parish = parish;
+		this.mission = mission;
 		
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Job Id "+this.jobId+ " and parish id "+parishId+" in LoggingStudentProcessor constructor");
@@ -126,10 +131,28 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     	List<StudentId> studentIds = new ArrayList<StudentId>();
     	Set<Sponsee> sponsees  = new HashSet<>();
     	
+		Receipt receipt = new Receipt();
+		if(null!=sponsor.getAppartmentNumber()) {
+			receipt.setAddress(sponsor.getAppartmentNumber()+" "+sponsor.getStreet()+" "+sponsor.getCity()+ " "+ sponsor.getState()+ " "+ sponsor.getPostalCode());
+		}else {
+			receipt.setAddress(sponsor.getStreet()+" "+sponsor.getCity()+ " "+ sponsor.getState()+ " "+ sponsor.getPostalCode());
+		}		
+		receipt.setCreatedby(2L);
+		receipt.setMissionname(this.mission);
+		receipt.setParish(this.parish);
+		receipt.setPaymentmethod(dto.getTransaction());
+		if(sponsor.isHasAnyCoSponser()) {
+			receipt.setReceivedfrom(sponsor.getFirstName()+ " & "+ sponsor.getCoSponserName());
+		}else {
+			receipt.setReceivedfrom(sponsor.getFirstName()+ " "+ sponsor.getLastName());
+		}
+		
+		receipt.setTotal(dto.getAmount());
 		
 		Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
     	Enrollment en = new Enrollment();
-
+    	
+    	
     	String studentCount = "1";
 		if(dto.getTotal().contains(".")) {
 			studentCount = dto.getTotal().split("\\.")[0];			
@@ -178,7 +201,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		en.setMiscAmount(totalReminder);						
 		en.setSponsees(sponsees);							
 		en.setStudentMaxOuts(studentMaxOuts);
-		
+		en.setReceipt(receipt);
 		return en;
     }
 }

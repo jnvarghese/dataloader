@@ -46,8 +46,10 @@ public class SponsorExcelFileToDatabaseJobConfig {
 	@Bean
 	@StepScope
 	ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor(@Value("#{jobExecutionContext['jobId']}") Long jobId,
-			@Value("#{jobExecutionContext['referenceId']}") Long parishId) {
-		return new SponsorProcessor(jobId, parishId);
+			@Value("#{jobExecutionContext['referenceId']}") Long parishId,
+			@Value("#{jobExecutionContext['parishName']}") String parishName,
+			@Value("#{jobExecutionContext['missionname']}") String missionname) {
+		return new SponsorProcessor(jobId, parishId, parishName, missionname);
 	}
 
 	@Bean

@@ -13,6 +13,9 @@ public class FileUpload {
 	@Column(name="referenceid")
 	private Long referenceId;
 	
+	@Column(name="initiativeid")
+	private Long initiativeId;
+	
 	@Column(name="filename")
 	private String fileName;
 	
@@ -25,8 +28,21 @@ public class FileUpload {
 	
 	private String uploaduri;
 	
+	@Column(name="jobid")
+	private Long jobId;
+	
 	@Column(name="batchexecutionstatus")
 	int batchExecutionStatus;
+	
+	
+
+	public Long getInitiativeId() {
+		return initiativeId;
+	}
+
+	public void setInitiativeId(Long initiativeId) {
+		this.initiativeId = initiativeId;
+	}
 
 	public Long getId() {
 		return id;
@@ -92,9 +108,12 @@ public class FileUpload {
 		this.batchExecutionStatus = batchExecutionStatus;
 	}
 
-	
-	
-	
-	
-	
+	public Long getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
+	}
+
 }

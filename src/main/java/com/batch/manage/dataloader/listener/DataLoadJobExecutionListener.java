@@ -35,9 +35,11 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 
 		LOGGER.debug(" After Job ");
 		Long recordId = (Long) jobExecution.getExecutionContext().get("fileUploadRecordId");
+		Long jobId = jobExecution.getJobId();
 		FileUpload fp = fileUploadDAO.findOne(recordId);
 		if (null != fp) {
 			fp.setBatchExecutionStatus(1);
+			fp.setJobId(jobId);
 			fileUploadDAO.save(fp);
 		}
 	}
@@ -52,6 +54,10 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		LOGGER.info("Size of excel files is , {} for type {} ", list.size(), jobParameters.getString("type"));
 		boolean status = false;
 		Long jobId = jobExecution.getJobId();
+		if("SP".equalsIgnoreCase(jobParameters.getString("type"))) {
+			jobExecution.getExecutionContext().put("parishName", fileUploadDAO.parish(list.get(0).getReferenceId()));
+			jobExecution.getExecutionContext().put("missionname", fileUploadDAO.initiative(list.get(0).getInitiativeId()));
+		}
 		if (list.size() > 0) {
 
 			jobExecution.getExecutionContext().put("data", list.get(0).getFileData());

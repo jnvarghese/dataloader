@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.batch.manage.dataloader.model.entity.Receipt;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 
 
@@ -33,8 +34,10 @@ public class Enrollment {
 	@OneToOne()
 	@JoinColumn(name = "sponsorid")
 	private Sponsor spn;
-	//@Column(name="sponsorid")
-	//private Long sponsorId;
+	
+	@OneToOne
+    @JoinColumn(name="receiptid")
+    private Receipt receipt;
 	
 	@Column(name="paymentdate")
 	private Date paymentDate;
@@ -63,9 +66,16 @@ public class Enrollment {
 	
 	@Transient
 	private Date localExpDate;
+
 	
-	
-	
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
+	}
+
 	public Date getLocalExpDate() {
 		return localExpDate;
 	}

@@ -42,9 +42,9 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
 	    }
     	item.setFavColor(dto.getFavoriteColor());
     	item.setFavGame(dto.getFavoriteGame());
-    	if("MALE".equalsIgnoreCase(dto.getGender())) {
+    	if("MALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
     		item.setGender("M");
-    	}else if("FEMALE".equalsIgnoreCase(dto.getGender())) {
+    	}else if("FEMALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
     		item.setGender("F");
     	}else {
     		LOGGER.warn(" Invalid gender {} for child {} , refer job {}", dto.getGender(), dto.getNameOfChild(), this.jobId);
@@ -63,7 +63,8 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     	item.setStudentName(dto.getNameOfChild());
     	item.setTalent(dto.getTalent());    
     	item.setCreatedBy(1L);
-    	item.setImageLinkRef(dto.getAddLinkForPicture());
+    	item.setProfilePicture(dto.getAddLinkForPicture());
+    	//item.setImageLinkRef(dto.getAddLinkForPicture());
         return item;
     }
     

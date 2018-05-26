@@ -32,7 +32,7 @@ public class StudentDTO {
 	
 	private String recentAchivements;
 	
-	private String addLinkForPicture;
+	private byte[] addLinkForPicture;
 
 	
 	
@@ -151,11 +151,11 @@ public class StudentDTO {
 		this.recentAchivements = recentAchivements;
 	}
 
-	public String getAddLinkForPicture() {
+	public byte[] getAddLinkForPicture() {
 		return addLinkForPicture;
 	}
 
-	public void setAddLinkForPicture(String addLinkForPicture) {
+	public void setAddLinkForPicture(byte[] addLinkForPicture) {
 		this.addLinkForPicture = addLinkForPicture;
 	}
 

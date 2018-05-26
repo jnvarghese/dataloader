@@ -14,9 +14,15 @@ public interface StudentIdDAO extends CrudRepository<StudentId, Long> {
 	 		+ "AND P.AGENCYID = A.ID AND P.CODE=:projectCode AND A.CODE=:agencyCode AND S.STATUS = 0 ", nativeQuery = true)
 	 StudentId findOne(@Param("agencyCode") String agency, @Param("projectCode") String project, @Param("studentCode") String studentCode);
 	 
+	 /*
 	 @Query(value = "SELECT s.id FROM student s, parish_project pp where pp.projectId = s.projectId and pp.parishId =:parishId "
 	 		+ "and s.id  not in ( select studentId from student_maxout where DATE(maxOut) > DATE(now())) and s.STATUS = 0 "
 	 		+ "order by studentCode LIMIT :limitBy ", nativeQuery = true)
 	 List<StudentId> list(@Param("parishId") Long parishId, @Param("limitBy") int limitBy);
+	 */
 	 
+	 @Query(value = "SELECT s.id FROM student s, parish_project pp where pp.projectId = s.projectId and pp.parishId =:parishId "
+		 		+ "and s.id  not in ( select studentId from student_maxout) and s.STATUS = 0 "
+		 		+ "order by studentCode LIMIT :limitBy ", nativeQuery = true)
+		 List<StudentId> list(@Param("parishId") Long parishId, @Param("limitBy") int limitBy);
 }

@@ -62,6 +62,19 @@ public class Student {
 	@Column(name="imagelinkref")
 	private String imageLinkRef;
 	
+	@Column(name="profilepicture")
+	private byte[] profilePicture;
+	
+	
+	
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
 	public Long getCreatedBy() {
 		return createdBy;
 	}

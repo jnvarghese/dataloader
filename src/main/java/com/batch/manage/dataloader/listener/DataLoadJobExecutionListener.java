@@ -40,7 +40,7 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		if (null != fp) {
 			fp.setBatchExecutionStatus(1);
 			fp.setJobId(jobId);
-			fileUploadDAO.save(fp);
+			//fileUploadDAO.save(fp);
 		}
 	}
 

@@ -20,10 +20,29 @@ public class JobLauncherController {
 	@Autowired
 	@Qualifier("sponsorExcelFileToDatabaseJob")
 	Job sponsorjob;
+	
+	@Autowired
+	@Qualifier("receiptExcelFileToDatabaseJob")
+	Job receiptjob;
 
 	@Autowired
 	@Qualifier("excelFileToDatabaseJob")
 	Job studentjob;
+	
+	@RequestMapping("/launchrjob")
+	public String handleReceipt() throws Exception {
+
+		Logger logger = LoggerFactory.getLogger(this.getClass());
+		try {
+			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+					.addString("type", "R").toJobParameters();
+			jobLauncher.run(receiptjob, jobParameters);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+
+		return "Done";
+	}
 
 	@RequestMapping("/launchspjob")
 	public String handle() throws Exception {

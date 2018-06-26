@@ -8,7 +8,6 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.batch.manage.dataloader.model.entity.Sponsor;
-import com.batch.manage.dataloader.service.ReceiptDAO;
 import com.batch.manage.dataloader.service.SponsorDAO;
 
 public class SponsorWriter implements ItemWriter<Sponsor> {
@@ -18,8 +17,7 @@ public class SponsorWriter implements ItemWriter<Sponsor> {
     @Autowired
     private SponsorDAO sponsorDAO;
 
-    @Autowired
-    private ReceiptDAO receiptDAO;
+  
     
     @Override
     public void write(List<? extends Sponsor> items) throws Exception {
@@ -28,7 +26,7 @@ public class SponsorWriter implements ItemWriter<Sponsor> {
        items.forEach(i -> LOGGER.debug("Received the information of a Sponsor: {}", i));
         
         for(Sponsor dto : items) {
-        	receiptDAO.save(dto.getErn().getReceipt());
+        	//receiptDAO.save(dto.getErn().getReceipt());
         	sponsorDAO.save(dto);
         }
     }

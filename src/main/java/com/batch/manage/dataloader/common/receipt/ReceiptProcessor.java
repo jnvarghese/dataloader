@@ -1,5 +1,9 @@
 package com.batch.manage.dataloader.common.receipt;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -19,6 +23,8 @@ public class ReceiptProcessor implements ItemProcessor<ReceiptDTO, Receipts> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptProcessor.class);
 
+	DateFormat df = new SimpleDateFormat("MM/dd/YYYY");
+	 
 	@Autowired
 	ParishDAO parishDAO;
 
@@ -71,10 +77,10 @@ public class ReceiptProcessor implements ItemProcessor<ReceiptDTO, Receipts> {
 			r.setMiddleName(dto.getMiddlename());
 			r.setPhone1(dto.getPhone1());
 			r.setPhone2(dto.getPhone2());
-			r.setrDate(dto.getDate());
-			// r.setReceiptId(receiptId);
-			// r.setReceiptType(dto.getReceipt());
-
+			if(null != dto.getDate() || !dto.getDate().isEmpty() || !"".equals(dto.getDate().trim())) {
+				r.setrDate(df.format(new Date(Long.valueOf(dto.getDate()))));
+		    }
+			
 			r.setState(dto.getState());
 			// r.setStatus(status);
 			r.setStreetAddress(dto.getStreetaddress());

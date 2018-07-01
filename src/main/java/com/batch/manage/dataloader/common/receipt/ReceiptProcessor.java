@@ -86,7 +86,21 @@ public class ReceiptProcessor implements ItemProcessor<ReceiptDTO, Receipts> {
 			r.setStreetAddress(dto.getStreetaddress());
 			r.setTransaction(dto.getTransaction());
 			r.setType(dto.getCategory().equals("DONATION") ? 0 : 1);
-			r.setZipCode(dto.getZip());
+			if(null != dto.getZip()) {
+	    		if(dto.getZip().contains(".")) {
+	    			String[] zips = dto.getZip().split("\\.");
+	       			if(zips[0].length() < 5) {
+	       				r.setZipCode(0+zips[0]);
+	    			}else {
+	    				r.setZipCode(zips[0]);
+	    			}
+	        		
+	        	}else {
+	        		r.setZipCode(dto.getZip());
+	        	}
+	    	}else {
+	    		r.setZipCode("00000");
+	    	}
 		}
 		return r;
 	}

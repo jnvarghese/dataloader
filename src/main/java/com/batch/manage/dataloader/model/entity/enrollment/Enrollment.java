@@ -35,10 +35,10 @@ public class Enrollment {
 	@JoinColumn(name = "sponsorid")
 	private Sponsor spn;
 	
-	@OneToOne
+/*	@OneToOne
     @JoinColumn(name="receiptid")
     private Receipt receipt;
-	
+*/	
 	@Column(name="paymentdate")
 	private Date paymentDate;
 
@@ -67,7 +67,7 @@ public class Enrollment {
 	@Transient
 	private Date localExpDate;
 
-	
+	/*
 	public Receipt getReceipt() {
 		return receipt;
 	}
@@ -75,6 +75,7 @@ public class Enrollment {
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
 	}
+	*/
 
 	public Date getLocalExpDate() {
 		return localExpDate;

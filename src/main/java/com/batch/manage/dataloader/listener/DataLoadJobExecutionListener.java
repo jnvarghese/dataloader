@@ -57,6 +57,8 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		if("SP".equalsIgnoreCase(jobParameters.getString("type"))) {
 			jobExecution.getExecutionContext().put("parishName", fileUploadDAO.parish(list.get(0).getReferenceId()));
 			jobExecution.getExecutionContext().put("missionname", fileUploadDAO.initiative(list.get(0).getInitiativeId()));
+			jobExecution.getExecutionContext().put("startingCode", list.get(0).getStartingCode());
+			jobExecution.getExecutionContext().put("startingStudentCode", list.get(0).getStartingStudentCode());
 		}
 		if (list.size() > 0) {
 

@@ -48,8 +48,10 @@ public class SponsorExcelFileToDatabaseJobConfig {
 	ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor(@Value("#{jobExecutionContext['jobId']}") Long jobId,
 			@Value("#{jobExecutionContext['referenceId']}") Long parishId,
 			@Value("#{jobExecutionContext['parishName']}") String parishName,
-			@Value("#{jobExecutionContext['missionname']}") String missionname) {
-		return new SponsorProcessor(jobId, parishId, parishName, missionname);
+			@Value("#{jobExecutionContext['missionname']}") String missionname,
+			@Value("#{jobExecutionContext['startingCode']}") String startingCode,
+			@Value("#{jobExecutionContext['startingStudentCode']}") String startingStudentCode) {
+		return new SponsorProcessor(jobId, parishId, parishName, missionname, startingCode, startingStudentCode);
 	}
 
 	@Bean

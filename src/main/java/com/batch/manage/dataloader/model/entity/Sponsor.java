@@ -105,13 +105,7 @@ public class Sponsor {
 	
 	
 	
-	public Set<SponsorMaxout> getSponsorMaxOuts() {
-		return sponsorMaxOuts;
-	}
-
-	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
-		this.sponsorMaxOuts = sponsorMaxOuts;
-	}
+	
 
 	public String getPhone1() {
 		return phone1;
@@ -328,7 +322,14 @@ public class Sponsor {
 	public void setErn(Enrollment ern) {
 		this.ern = ern;
 	}
+	public Set<SponsorMaxout> getSponsorMaxOuts() {
+		return sponsorMaxOuts;
+	}
 
+	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
+		this.sponsorMaxOuts = sponsorMaxOuts;
+	}
+	
 
 	
 }

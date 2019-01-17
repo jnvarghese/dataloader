@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Receipts {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long receiptId;
 	
 	@Column(name="rdate")

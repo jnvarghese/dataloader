@@ -28,6 +28,12 @@ public class FileUpload {
 	
 	private String uploaduri;
 	
+	@Column(name="startingcode")
+	private String startingCode;
+	
+	@Column(name="startingstudentcode")
+	private String startingStudentCode;
+	
 	@Column(name="jobid")
 	private Long jobId;
 	
@@ -35,6 +41,23 @@ public class FileUpload {
 	int batchExecutionStatus;
 	
 	
+
+	
+	public String getStartingCode() {
+		return startingCode;
+	}
+
+	public void setStartingCode(String startingCode) {
+		this.startingCode = startingCode;
+	}
+
+	public String getStartingStudentCode() {
+		return startingStudentCode;
+	}
+
+	public void setStartingStudentCode(String startingStudentCode) {
+		this.startingStudentCode = startingStudentCode;
+	}
 
 	public Long getInitiativeId() {
 		return initiativeId;

@@ -24,7 +24,7 @@ import com.batch.manage.dataloader.listener.DataLoadJobExecutionListener;
 import com.batch.manage.dataloader.model.EnrollmentDTO;
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
 
-@Configuration
+//@Configuration
 public class EnrollmentExcelFileToDatabaseJobConfig {
 
 	@Bean

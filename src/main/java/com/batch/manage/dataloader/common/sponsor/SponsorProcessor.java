@@ -34,10 +34,13 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
     private String parish;
     private String mission;
     
+    private String startingCode;
+    private String startingStudentCode;
+    
     @Autowired
     private StudentIdDAO studentIdDAO;
     
-	public SponsorProcessor(Long jobId, Long parishId, String parish, String mission) {
+	public SponsorProcessor(Long jobId, Long parishId, String parish, String mission,String startingCode,String startingStudentCode) {
 		this.jobId =jobId;
 		this.parishId = parishId;
 		this.parish = parish;
@@ -148,7 +151,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		}
 		
 		receipt.setTotal(dto.getAmount());
-		
+		//receipt.setId(497L);
 		Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
     	Enrollment en = new Enrollment();
     	
@@ -201,7 +204,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		en.setMiscAmount(totalReminder);						
 		en.setSponsees(sponsees);							
 		en.setStudentMaxOuts(studentMaxOuts);
-		en.setReceipt(receipt);
+		//en.setReceipt(receipt);
 		return en;
     }
 }

@@ -329,7 +329,7 @@ public class Sponsor {
 	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
 		this.sponsorMaxOuts = sponsorMaxOuts;
 	}
-	
+
 
 	
 }

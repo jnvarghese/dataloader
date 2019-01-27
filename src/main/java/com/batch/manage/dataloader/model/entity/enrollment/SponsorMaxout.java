@@ -69,6 +69,9 @@ public class SponsorMaxout {
 		return "SponsorMaxout [id=" + id + ", spnMax=" + spnMax + ", enrollment=" + enrollment + ", maxOut=" + maxOut
 				+ "]";
 	}
+
+
+	
 	
 	
 	

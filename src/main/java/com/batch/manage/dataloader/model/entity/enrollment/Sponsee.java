@@ -102,6 +102,13 @@ public class Sponsee {
 		this.expirationYear = expirationYear;
 		this.studentId = studentId;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Sponsee [id=" + id + ", enrollment=" + enrollment + ", expirationMonth=" + expirationMonth
+				+ ", expirationYear=" + expirationYear + ", studentId=" + studentId + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + "]";
+	}
+
 	
 }

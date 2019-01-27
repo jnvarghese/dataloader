@@ -60,8 +60,9 @@ public class StudentMaxout {
 	}
 	@Override
 	public String toString() {
-		return "StudentMaxout [id=" + id + ", studentId=" + studentId  + ", maxOut="
+		return "StudentMaxout [id=" + id + ", studentId=" + studentId + ", enrollment=" + enrollment + ", maxOut="
 				+ maxOut + "]";
 	}
 
+	
 }

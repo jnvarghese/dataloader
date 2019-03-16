@@ -214,7 +214,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 			en.setLocalExpDate(expirationDate); // just to pass the value back - a place holder this is expdate for
 												// sponsor_maxOut
 			en.setSpn(sponsor);
-			en.setContributionAmount(contribution - reminderContributionPerChild); // 500 in excel (2 kids) this wll be
+			en.setContributionAmount(contribution - totalReminder); // 500 in excel (2 kids) this wll be
 																					// 480
 			en.setCreatedBy(2L);
 			en.setJobId(jobId);

@@ -171,6 +171,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		}
 		double contribution = Double.valueOf(dto.getAmount().replace("$", ""));
 		int noOfChild = Integer.valueOf(studentCount);
+		System.out.println(" ---- noOfChild --- "+ noOfChild);
 		double perChildContribution = contribution / noOfChild;
 		double reminderContributionPerChild = perChildContribution % 20;
 		double totalReminder = reminderContributionPerChild * noOfChild;
@@ -189,7 +190,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		// / (1000 * 60 * 60 * 24) );
 		// LOGGER.debug(String.format(" diffCurrentAndEffectiveDate %d
 		// ",diffCurrentAndEffectiveDate));
-		int monthToAdd = maxMonth - 1;
+		int monthToAdd	 = maxMonth - 1;
 		myCal.add(Calendar.MONTH, monthToAdd);
 		// 2018-02-01 00:00:00 --expirationDate
 		Date expirationDate = myCal.getTime();
@@ -202,8 +203,10 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		int year = myCal.get(Calendar.YEAR);
 		if (null != dto.getTotal() && dto.getTotal().contains(".")) {
 			studentIds = studentIdDAO.list(this.parishId, Integer.valueOf(studentCount));
+		}else {
+			System.out.println("-----else-----");
 		}
-		if (studentIds.size() > 1) {
+		if (studentIds.size() > 0) {
 			int incrementedMonth = month + 1;
 			LOGGER.debug(String.format(" Month -MyCal.get(Calendar.MONTH) %d year %d and incremented month is %d",
 					month, year, incrementedMonth));

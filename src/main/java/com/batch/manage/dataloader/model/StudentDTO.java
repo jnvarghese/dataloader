@@ -32,7 +32,7 @@ public class StudentDTO {
 	
 	private String recentAchivements;
 	
-	private byte[] addLinkForPicture;
+	private byte[] addLinkForPhoto;
 
 	
 	
@@ -151,12 +151,12 @@ public class StudentDTO {
 		this.recentAchivements = recentAchivements;
 	}
 
-	public byte[] getAddLinkForPicture() {
-		return addLinkForPicture;
+	public byte[] getAddLinkForPhoto() {
+		return addLinkForPhoto;
 	}
 
-	public void setAddLinkForPicture(byte[] addLinkForPicture) {
-		this.addLinkForPicture = addLinkForPicture;
+	public void setAddLinkForPhoto(byte[] addLinkForPhoto) {
+		this.addLinkForPhoto = addLinkForPhoto;
 	}
 
 	public String getProjectLocation() {
@@ -174,7 +174,7 @@ public class StudentDTO {
 				+ nameOfParent + ", occupationOfParent=" + occupationOfParent + ", motherTongue=" + motherTongue
 				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", hobby=" + hobby + ", projectLocation="
 				+ projectLocation + ", talent=" + talent + ", recentAchivements=" + recentAchivements
-				+ ", addLinkForPicture=" + addLinkForPicture + "]";
+				+ ", addLinkForPicture=" + addLinkForPhoto + "]";
 	}
 	  
     

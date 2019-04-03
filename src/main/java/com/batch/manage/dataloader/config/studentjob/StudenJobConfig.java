@@ -25,7 +25,7 @@ import com.batch.manage.dataloader.model.StudentDTO;
 import com.batch.manage.dataloader.model.entity.Student;
 
 @Configuration
-public class StudentExcelFileToDatabaseJobConfig {
+public class StudenJobConfig {
 
 	@Bean
 	@StepScope
@@ -61,17 +61,17 @@ public class StudentExcelFileToDatabaseJobConfig {
 	}
 
 	@Bean
-	Step excelFileToDatabaseStep(ItemReader<StudentDTO> excelStudentReader,
+	Step studentStep(ItemReader<StudentDTO> excelStudentReader,
 			ItemProcessor<StudentDTO, Student> excelStudentProcessor, ItemWriter<Student> excelStudentWriter,
 			StepBuilderFactory stepBuilderFactory) {
-		return stepBuilderFactory.get("excelFileToDatabaseStep").<StudentDTO, Student>chunk(50)
+		return stepBuilderFactory.get("studentStep").<StudentDTO, Student>chunk(50)
 				.reader(excelStudentReader).processor(excelStudentProcessor).writer(excelStudentWriter).build();
 	}
 
-	@Bean("excelFileToDatabaseJob")
+	@Bean("studentJob")
 	Job excelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
-			@Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
-		return jobBuilderFactory.get("excelFileToDatabaseJob").incrementer(new RunIdIncrementer())
+			@Qualifier("studentStep") Step excelStudentStep) {
+		return jobBuilderFactory.get("studentJob").incrementer(new RunIdIncrementer())
 				.listener(dataLoadJobExecutionListener()).flow(excelStudentStep).end().build();
 	}
 }

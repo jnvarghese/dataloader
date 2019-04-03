@@ -24,8 +24,8 @@ import com.batch.manage.dataloader.listener.DataLoadJobExecutionListener;
 import com.batch.manage.dataloader.model.EnrollmentDTO;
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
 
-//@Configuration
-public class EnrollmentExcelFileToDatabaseJobConfig {
+@Configuration
+public class SponsorStudentJobConfig {
 
 	@Bean
 	@StepScope
@@ -61,18 +61,18 @@ public class EnrollmentExcelFileToDatabaseJobConfig {
 	}
 
 	@Bean
-	Step sponsorExcelFileToDatabaseStep(ItemReader<EnrollmentDTO> excelEnrollmentReader,
+	Step sponsorStudentStep(ItemReader<EnrollmentDTO> excelEnrollmentReader,
 			ItemProcessor<EnrollmentDTO, Enrollment> excelEnrollmentProcessor,
 			ItemWriter<Enrollment> excelEnrollmentWriter, StepBuilderFactory stepBuilderFactory) {
-		return stepBuilderFactory.get("sponsorExcelFileToDatabaseStep").<EnrollmentDTO, Enrollment>chunk(5)
+		return stepBuilderFactory.get("sponsorStudentStep").<EnrollmentDTO, Enrollment>chunk(5)
 				.reader(excelEnrollmentReader).processor(excelEnrollmentProcessor).writer(excelEnrollmentWriter)
 				.build();
 	}
 
 	@Bean
-	Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
-			@Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
-		return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob").incrementer(new RunIdIncrementer())
+	Job sponsorAndStudentJob(JobBuilderFactory jobBuilderFactory,
+			@Qualifier("sponsorStudentStep") Step excelStudentStep) {
+		return jobBuilderFactory.get("sponsorAndStudentJob").incrementer(new RunIdIncrementer())
 				.listener(dataLoadJobExecutionListener()).flow(excelStudentStep).end().build();
 	}
 }

@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.batch.manage.dataloader.model.entity.Receipt;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 
 

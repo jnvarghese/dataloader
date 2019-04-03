@@ -8,6 +8,7 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,17 +19,22 @@ public class JobLauncherController {
 	JobLauncher jobLauncher;
 
 	@Autowired
-	@Qualifier("sponsorExcelFileToDatabaseJob")
+	@Qualifier("sponsorJob")
 	Job sponsorjob;
 	
 	@Autowired
-	@Qualifier("receiptExcelFileToDatabaseJob")
-	Job receiptjob;
+	@Qualifier("sponsorAndStudentJob")
+	Job sponsorStudentjob;
+	
+//	@Autowired
+	//@Qualifier("receiptExcelFileToDatabaseJob")
+	//Job receiptjob;
 
 	@Autowired
-	@Qualifier("excelFileToDatabaseJob")
+	@Qualifier("studentJob")
 	Job studentjob;
 	
+	/*
 	@RequestMapping("/launchrjob")
 	public String handleReceipt() throws Exception {
 
@@ -42,15 +48,16 @@ public class JobLauncherController {
 		}
 
 		return "Done";
-	}
+	}*/
 
-	@RequestMapping("/launchspjob")
-	public String handle() throws Exception {
-
+	@RequestMapping("/launchspjob/{category}")
+	public String handleSponsor(@PathVariable(name = "category", required=false) String category) throws Exception {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 		try {
 			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
-					.addString("type", "SP").toJobParameters();
+					.addString("type", "SP")
+					.addString("category", category)
+					.toJobParameters();
 			jobLauncher.run(sponsorjob, jobParameters);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -60,13 +67,27 @@ public class JobLauncherController {
 	}
 
 	@RequestMapping("/launchstjob")
-	public String handleTudentJob() throws Exception {
+	public String handleStudent() throws Exception {
 
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 		try {
 			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
 					.addString("type", "ST").toJobParameters();
 			jobLauncher.run(studentjob, jobParameters);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+
+		return "Done";
+	}
+	@RequestMapping("/launchssjob")
+	public String handleSponsorAndStudent() throws Exception {
+
+		Logger logger = LoggerFactory.getLogger(this.getClass());
+		try {
+			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+					.addString("type", "SS").toJobParameters();
+			jobLauncher.run(sponsorStudentjob, jobParameters);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}

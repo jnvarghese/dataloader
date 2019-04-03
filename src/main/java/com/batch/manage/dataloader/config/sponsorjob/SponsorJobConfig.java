@@ -25,7 +25,7 @@ import com.batch.manage.dataloader.model.SponsorDTO;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 
 @Configuration
-public class SponsorExcelFileToDatabaseJobConfig {
+public class SponsorJobConfig {
 
 	@Bean
 	@StepScope
@@ -50,8 +50,9 @@ public class SponsorExcelFileToDatabaseJobConfig {
 			@Value("#{jobExecutionContext['parishName']}") String parishName,
 			@Value("#{jobExecutionContext['missionname']}") String missionname,
 			@Value("#{jobExecutionContext['startingCode']}") String startingCode,
-			@Value("#{jobExecutionContext['startingStudentCode']}") String startingStudentCode) {
-		return new SponsorProcessor(jobId, parishId, parishName, missionname, startingCode, startingStudentCode);
+			@Value("#{jobExecutionContext['startingStudentCode']}") String startingStudentCode,
+			@Value("#{jobExecutionContext['category']}") String category) {
+		return new SponsorProcessor(jobId, parishId, parishName, missionname, startingCode, startingStudentCode, category);
 	}
 
 	@Bean
@@ -65,17 +66,17 @@ public class SponsorExcelFileToDatabaseJobConfig {
 	}
 
 	@Bean
-	Step sponsorExcelFileToDatabaseStep(ItemReader<SponsorDTO> excelSponsorReader,
+	Step sponsorStep(ItemReader<SponsorDTO> excelSponsorReader,
 			ItemProcessor<SponsorDTO, Sponsor> excelSponsorProcessor, ItemWriter<Sponsor> excelSponsorWriter,
 			StepBuilderFactory stepBuilderFactory) {
-		return stepBuilderFactory.get("sponsorExcelFileToDatabaseStep").<SponsorDTO, Sponsor>chunk(1)
+		return stepBuilderFactory.get("sponsorStep").<SponsorDTO, Sponsor>chunk(1)
 				.reader(excelSponsorReader).processor(excelSponsorProcessor).writer(excelSponsorWriter).build();
 	}
 
 	@Bean
-	Job sponsorExcelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
-			@Qualifier("sponsorExcelFileToDatabaseStep") Step excelStudentStep) {
-		return jobBuilderFactory.get("sponsorExcelFileToDatabaseJob").incrementer(new RunIdIncrementer())
+	Job sponsorJob(JobBuilderFactory jobBuilderFactory,
+			@Qualifier("sponsorStep") Step excelStudentStep) {
+		return jobBuilderFactory.get("sponsorJob").incrementer(new RunIdIncrementer())
 				.listener(dataLoadJobExecutionListener()).flow(excelStudentStep).end().build();
 	}
 }

@@ -38,16 +38,18 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 
 	private String startingCode;
 	private String startingStudentCode;
+	private String category;
 
 	@Autowired
 	private StudentIdDAO studentIdDAO;
 
 	public SponsorProcessor(Long jobId, Long parishId, String parish, String mission, String startingCode,
-			String startingStudentCode) {
+			String startingStudentCode,String category) {
 		this.jobId = jobId;
 		this.parishId = parishId;
 		this.parish = parish;
 		this.mission = mission;
+		this.category =  category;
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(
@@ -126,16 +128,16 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		sponsor.setPhone1(dto.getPhone1());
 		sponsor.setPhone2(dto.getPhone2());
 		sponsor.setTransactionRemarks(dto.getTransaction());
-
-		Enrollment enrollment = getEnrollment(dto, sponsor);
-		if(null == enrollment) {
-			LOGGER.warn(String.format(" No students found for job %d", jobId));
-			return null;
-		}
-		sponsorMaxOuts.add(new SponsorMaxout(sponsor, enrollment, enrollment.getLocalExpDate()));
-		sponsor.setSponsorMaxOuts(sponsorMaxOuts);
-		sponsor.setErn(enrollment);
-
+        if(!category.equalsIgnoreCase("sponsorOnly")) {
+			Enrollment enrollment = getEnrollment(dto, sponsor);
+			if(null == enrollment) {
+				LOGGER.warn(String.format(" No students found for job %d", jobId));
+				return null;
+			}
+			sponsorMaxOuts.add(new SponsorMaxout(sponsor, enrollment, enrollment.getLocalExpDate()));
+			sponsor.setSponsorMaxOuts(sponsorMaxOuts);
+			sponsor.setErn(enrollment);
+        }
 		return sponsor;
 	}
 

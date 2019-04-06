@@ -29,26 +29,28 @@ public class Enrollment {
 	
 	@Column(name="jobid")
 	private Long jobId;
-	
-	@OneToOne()
+	// @OneToOne()
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "sponsorid")
 	private Sponsor spn;
 	
-/*	@OneToOne
-    @JoinColumn(name="receiptid")
-    private Receipt receipt;
-*/	
 	@Column(name="paymentdate")
 	private Date paymentDate;
-
+	
 	@Column(name="effectivedate")
 	private Date effectiveDate;
-
+	
+	@Column(name="actualamount")
+	private double actualamount;
+	
 	@Column(name="contributionamount")
 	private double contributionAmount;
 	
 	@Column(name="miscamount")
 	private double miscAmount;
+	
+	@Column(name="netamount")
+	private double netAmount;
 	
 	@Column(name="createdby")
 	private Long createdBy;
@@ -57,24 +59,19 @@ public class Enrollment {
             fetch = FetchType.LAZY,
             mappedBy = "enrollment")
 	private Set<Sponsee> sponsees  = new HashSet<>();
-
+	
 	@OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "enrollment")
 	private Set<StudentMaxout> studentMaxOuts  = new HashSet<>();
 	
+	@OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "enrollment")
+	private Set<SponsorMaxout> sponsorMaxOuts  = new HashSet<>();
+	
 	@Transient
 	private Date localExpDate;
-
-	/*
-	public Receipt getReceipt() {
-		return receipt;
-	}
-
-	public void setReceipt(Receipt receipt) {
-		this.receipt = receipt;
-	}
-	*/
 
 	public Date getLocalExpDate() {
 		return localExpDate;
@@ -100,8 +97,21 @@ public class Enrollment {
 		this.id = id;
 	}
 
-	
+	public double getActualamount() {
+		return actualamount;
+	}
 
+	public void setActualamount(double actualamount) {
+		this.actualamount = actualamount;
+	}
+
+	public double getNetAmount() {
+		return netAmount;
+	}
+
+	public void setNetAmount(double netAmount) {
+		this.netAmount = netAmount;
+	}
 
 	public Sponsor getSpn() {
 		return spn;
@@ -165,6 +175,14 @@ public class Enrollment {
 
 	public void setStudentMaxOuts(Set<StudentMaxout> studentMaxOuts) {
 		this.studentMaxOuts = studentMaxOuts;
+	}
+
+	public Set<SponsorMaxout> getSponsorMaxOuts() {
+		return sponsorMaxOuts;
+	}
+
+	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
+		this.sponsorMaxOuts = sponsorMaxOuts;
 	}
 
 

@@ -46,8 +46,9 @@ public class SponsorStudentJobConfig {
 	@Bean
 	@StepScope
 	ItemProcessor<EnrollmentDTO, Enrollment> excelEnrollmentProcessor(
-			@Value("#{jobExecutionContext['jobId']}") Long jobId) {
-		return new EnrollmentProcessor(jobId);
+			@Value("#{jobExecutionContext['jobId']}") Long jobId,
+			@Value("#{jobExecutionContext['referenceId']}") Long parishId) {
+		return new EnrollmentProcessor(jobId, parishId);
 	}
 
 	@Bean
@@ -64,7 +65,7 @@ public class SponsorStudentJobConfig {
 	Step sponsorStudentStep(ItemReader<EnrollmentDTO> excelEnrollmentReader,
 			ItemProcessor<EnrollmentDTO, Enrollment> excelEnrollmentProcessor,
 			ItemWriter<Enrollment> excelEnrollmentWriter, StepBuilderFactory stepBuilderFactory) {
-		return stepBuilderFactory.get("sponsorStudentStep").<EnrollmentDTO, Enrollment>chunk(5)
+		return stepBuilderFactory.get("sponsorStudentStep").<EnrollmentDTO, Enrollment>chunk(1)
 				.reader(excelEnrollmentReader).processor(excelEnrollmentProcessor).writer(excelEnrollmentWriter)
 				.build();
 	}

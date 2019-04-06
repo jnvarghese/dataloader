@@ -27,8 +27,7 @@ public class SponsorMaxout {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enrollmentid", nullable = false)
 	private Enrollment enrollment;
-	/*@Column(name = "enrollmentid")
-	private Long enrollmentId;*/
+	
 	@Column(name = "maxout")
 	private Date maxOut;
 	
@@ -69,10 +68,4 @@ public class SponsorMaxout {
 		return "SponsorMaxout [id=" + id + ", spnMax=" + spnMax + ", enrollment=" + enrollment + ", maxOut=" + maxOut
 				+ "]";
 	}
-
-
-	
-	
-	
-	
 }

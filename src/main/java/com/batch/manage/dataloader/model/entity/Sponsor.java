@@ -24,7 +24,7 @@ public class Sponsor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(mappedBy = "spn", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "spn", cascade = CascadeType.MERGE )
 	private Enrollment ern;
 	
 	@OneToMany(cascade = CascadeType.ALL,
@@ -71,8 +71,8 @@ public class Sponsor {
 	@Column(name="createdby")
 	private Long createdBy;
 	
-	@Column(name="appartmentnumber")
-	private String appartmentNumber;
+	//@Column(name="appartmentnumber")
+	//private String appartmentNumber;
 	
 	private String street;
 	
@@ -242,14 +242,14 @@ public class Sponsor {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-
+    /*
 	public String getAppartmentNumber() {
 		return appartmentNumber;
 	}
 
 	public void setAppartmentNumber(String appartmentNumber) {
 		this.appartmentNumber = appartmentNumber;
-	}
+	} */
 
 	public String getStreet() {
 		return street;

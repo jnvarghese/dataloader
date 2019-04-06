@@ -2,8 +2,6 @@ package com.batch.manage.dataloader.common.sponsor;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +15,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.batch.manage.dataloader.model.SponsorDTO;
-import com.batch.manage.dataloader.model.entity.Receipt;
 import com.batch.manage.dataloader.model.entity.Sponsor;
 import com.batch.manage.dataloader.model.entity.StudentId;
 import com.batch.manage.dataloader.model.entity.enrollment.Enrollment;
@@ -35,7 +32,6 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 	private Long parishId;
 	private String parish;
 	private String mission;
-
 	private String startingCode;
 	private String startingStudentCode;
 	private String category;
@@ -64,7 +60,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 
 		Set<SponsorMaxout> sponsorMaxOuts = new HashSet<>();
 
-		sponsor.setAppartmentNumber(null);
+		//sponsor.setAppartmentNumber(null);
 		sponsor.setCity(dto.getCity());
 
 		sponsor.setEmailAddress(dto.getEmail1());
@@ -128,7 +124,7 @@ public class SponsorProcessor implements ItemProcessor<SponsorDTO, Sponsor> {
 		sponsor.setPhone1(dto.getPhone1());
 		sponsor.setPhone2(dto.getPhone2());
 		sponsor.setTransactionRemarks(dto.getTransaction());
-        if(!category.equalsIgnoreCase("sponsorOnly")) {
+        if(!category.equalsIgnoreCase("sponsorOnly")) {	
 			Enrollment enrollment = getEnrollment(dto, sponsor);
 			if(null == enrollment) {
 				LOGGER.warn(String.format(" No students found for job %d", jobId));

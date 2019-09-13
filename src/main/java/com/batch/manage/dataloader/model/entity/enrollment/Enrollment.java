@@ -30,7 +30,7 @@ public class Enrollment {
 	@Column(name="jobid")
 	private Long jobId;
 	// @OneToOne()
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "sponsorid")
 	private Sponsor spn;
 	

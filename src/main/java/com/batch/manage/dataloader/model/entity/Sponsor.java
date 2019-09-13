@@ -24,7 +24,7 @@ public class Sponsor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(mappedBy = "spn", cascade = CascadeType.MERGE )
+	@OneToOne(mappedBy = "spn", cascade = CascadeType.ALL )
 	private Enrollment ern;
 	
 	@OneToMany(cascade = CascadeType.ALL,
@@ -328,6 +328,19 @@ public class Sponsor {
 
 	public void setSponsorMaxOuts(Set<SponsorMaxout> sponsorMaxOuts) {
 		this.sponsorMaxOuts = sponsorMaxOuts;
+	}
+
+	@Override
+	public String toString() {
+		return "Sponsor [id=" + id + ", ern=" + ern + ", sponsorMaxOuts=" + sponsorMaxOuts + ", parishId=" + parishId
+				+ ", sponsorCode=" + sponsorCode + ", firstName=" + firstName + ", middleInitial=" + middleInitial
+				+ ", lastName=" + lastName + ", nickName=" + nickName + ", dayOfBirth=" + dayOfBirth + ", monthOfBirth="
+				+ monthOfBirth + ", sponsorStatus=" + sponsorStatus + ", emailAddress=" + emailAddress
+				+ ", emailAddress2=" + emailAddress2 + ", transactionRemarks=" + transactionRemarks + ", createdBy="
+				+ createdBy + ", street=" + street + ", city=" + city + ", state=" + state + ", postalCode="
+				+ postalCode + ", hasAnyCoSponser=" + hasAnyCoSponser + ", coSponserName=" + coSponserName
+				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", jobId=" + jobId + ", phone1="
+				+ phone1 + ", phone2=" + phone2 + "]";
 	}
 
 

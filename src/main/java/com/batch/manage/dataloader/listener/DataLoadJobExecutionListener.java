@@ -1,5 +1,6 @@
 package com.batch.manage.dataloader.listener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.batch.manage.dataloader.model.entity.FileUpload;
 import com.batch.manage.dataloader.service.FileUploadDAO;
+import com.batch.manage.dataloader.common.s3.S3Wrapper;
 
 public class DataLoadJobExecutionListener implements JobExecutionListener {
 
@@ -29,6 +31,9 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 
 	@Autowired
 	JobExplorer jobExplorer;
+	
+	@Autowired
+	S3Wrapper s3Wrapper;
 
 	@Override
 	public void afterJob(JobExecution jobExecution) {
@@ -40,7 +45,7 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		if (null != fp) {
 			fp.setBatchExecutionStatus(1);
 			fp.setJobId(jobId);
-			//fileUploadDAO.save(fp);
+			fileUploadDAO.save(fp);
 		}
 	}
 
@@ -62,8 +67,12 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 			jobExecution.getExecutionContext().put("category", jobParameters.getString("category"));
 		}
 		if (list.size() > 0) {
-
-			jobExecution.getExecutionContext().put("data", list.get(0).getFileData());
+			try {
+				jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//jobExecution.getExecutionContext().put("data", list.get(0).getFileData());
 			jobExecution.getExecutionContext().put("fileUploadRecordId", list.get(0).getId());
 			jobExecution.getExecutionContext().put("referenceId", list.get(0).getReferenceId());
 			jobExecution.getExecutionContext().put("jobId", jobId);

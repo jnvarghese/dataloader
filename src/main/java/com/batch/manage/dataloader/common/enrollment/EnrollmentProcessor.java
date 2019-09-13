@@ -69,13 +69,17 @@ public class EnrollmentProcessor implements ItemProcessor<EnrollmentDTO, Enrollm
 
 			String[] sponsors = dto.getSponsorId().split("-");
 			SponsorId sponsorId = sponsorIdDAO.findOne(sponsors[0], sponsors[1], sponsors[2], sponsors[3]);
+			System.out.println(" sponsorId " +sponsorId);
 			//sponsor = sponsorDAO.findOne(sponsors[0], sponsors[1], sponsors[2], sponsors[3]);
-			if (null == sponsorId) {
+			if (null == sponsorId) { //TODO added job conditionhere
+				//return null;
+				
 				sponsor = this.createSponsor(dto, sponsors[3]);
 			}else {
 				sponsor = new Sponsor();
 				sponsor.setId(sponsorId.getId());
 			}
+			System.out.println(" ===== sposnorid "+sponsor);
 			e.setSpn(sponsor);
 			sponsorMaxOuts.add(new SponsorMaxout(sponsor,e,  maxOut.getTime()));
 			e.setSponsorMaxOuts(sponsorMaxOuts);

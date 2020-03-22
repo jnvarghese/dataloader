@@ -65,8 +65,16 @@ public class Student {
 	@Column(name="profilepicture")
 	private byte[] profilePicture;
 	
+	private String status;
 	
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public byte[] getProfilePicture() {
 		return profilePicture;
 	}

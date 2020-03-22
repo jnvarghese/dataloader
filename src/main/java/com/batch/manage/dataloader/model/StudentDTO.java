@@ -1,6 +1,10 @@
 package com.batch.manage.dataloader.model;
 
+import java.util.Arrays;
+
 public class StudentDTO {
+	
+	private String code;
 	
 	private String studentId;
 	
@@ -34,8 +38,14 @@ public class StudentDTO {
 	
 	private byte[] addLinkForPicture;
 
-	
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public String getStudentId() {
 		return studentId;
@@ -171,13 +181,14 @@ public class StudentDTO {
 
 	@Override
 	public String toString() {
-		return "StudentDTO [studentId=" + studentId + ", nameOfChild=" + nameOfChild + ", gender=" + gender + ", grade="
-				+ grade + ", favoriteColor=" + favoriteColor + ", favoriteGame=" + favoriteGame + ", nameOfParent="
-				+ nameOfParent + ", occupationOfParent=" + occupationOfParent + ", motherTongue=" + motherTongue
-				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", hobby=" + hobby + ", projectLocation="
-				+ projectLocation + ", talent=" + talent + ", recentAchivements=" + recentAchivements
-				+ ", addLinkForPicture=" + addLinkForPicture + "]";
+		return "StudentDTO [code=" + code + ", studentId=" + studentId + ", nameOfChild=" + nameOfChild + ", gender="
+				+ gender + ", grade=" + grade + ", favoriteColor=" + favoriteColor + ", favoriteGame=" + favoriteGame
+				+ ", nameOfParent=" + nameOfParent + ", occupationOfParent=" + occupationOfParent + ", motherTongue="
+				+ motherTongue + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", hobby=" + hobby
+				+ ", projectLocation=" + projectLocation + ", talent=" + talent + ", recentAchivements="
+				+ recentAchivements + ", addLinkForPicture=" + Arrays.toString(addLinkForPicture) + "]";
 	}
-	  
+
+	
     
 }

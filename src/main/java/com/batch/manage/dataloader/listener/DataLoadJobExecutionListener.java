@@ -68,7 +68,12 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 		}
 		if (list.size() > 0) {
 			try {
-				jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
+				if(null == list.get(0).getUploaduri()) {
+					jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getFileName()));
+				} else {
+					jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
+				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

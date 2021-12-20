@@ -14,6 +14,6 @@ public interface StudentDAO extends CrudRepository<Student, Long> {
 	 		+ "AND P.AGENCYID = A.ID AND P.CODE=:projectCode AND A.CODE=:agencyCode AND S.STATUS = 0 ", nativeQuery = true)
 	 Student findOne(@Param("agencyCode") String agency, @Param("projectCode") String project, @Param("studentCode") String studentCode);
 
-	 @Query(value = "SELECT * FROM student S WHERE STUDENTCODE=:studentCode AND PROJECTID=:projectId  AND S.STATUS = 0 ORDER BY ID", nativeQuery = true)
+	 @Query(value = "SELECT * FROM student S WHERE STUDENTCODE=:studentCode AND PROJECTID=:projectId  ORDER BY ID", nativeQuery = true)
 	 List<Student> findByCodeAndProject(@Param("studentCode") String studentCode, @Param("projectId") Long projectId);
 }

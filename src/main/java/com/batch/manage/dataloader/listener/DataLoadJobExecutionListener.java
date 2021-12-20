@@ -67,12 +67,14 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 			jobExecution.getExecutionContext().put("category", jobParameters.getString("category"));
 		}
 		if (list.size() > 0) {
+			//jobExecution.getExecutionContext().put("data", list.get(0).getFileData());
 			try {
-				if(null == list.get(0).getUploaduri()) {
+				//jobExecution.getExecutionContext().put("data", list.get(0).getFileData());
+				//if(null == list.get(0).getUploaduri()) {
 					jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getFileName()));
-				} else {
-					jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
-				}
+				//} else {
+					//jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
+				//}
 				
 			} catch (IOException e) {
 				e.printStackTrace();

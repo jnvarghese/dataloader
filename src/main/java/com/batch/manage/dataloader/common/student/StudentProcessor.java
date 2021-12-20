@@ -40,20 +40,28 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     	
     	Student item = null;
     	if(dto.getCode().length() > 0) {
+    		
     		List<Student> students =  studentDAO.findByCodeAndProject(dto.getCode().split("\\.")[0], this.projectId);
+    		LOGGER.info("Row contains student code "+dto.getCode()+" students size is: "+students.size());
     		if(students.size() > 1) {
+    			LOGGER.warn(" MORE STUDENTS RETURNED FOR CODE "+dto.getCode()+" AND PROJECT "+this.projectId);
     			int size = students.size();
     			item = students.get(size-1);
     			students.remove(size-1);
+    			LOGGER.info("Removed students list " +students);
     			for(Student st: students) {
+    				System.out.println();
     				st.setStatus("1");
     				studentDAO.save(st);
     			}
-    		}else {
+    		}else if(students.size() > 0) {
     			item = students.get(0);
+    		}else {
+    			LOGGER.warn(" No Students returned" );
     		}
+    		
     		if(item == null) {
-    			LOGGER.warn(" Unable to find the studend with code {} ", dto.getCode());
+    			LOGGER.warn(" Unable to find the studend with code {} "+ dto.getCode());
     			item= new Student();
     		}
     	} else {
@@ -78,7 +86,11 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     		item.setGender("F");
     	}
     	if(dto.getGrade().contains(".")) {
-    		item.setGrade(dto.getGrade().split("\\.")[0]);
+    		if(dto.getGrade().split("\\.")[0].equals("0")) {
+    			item.setStatus("1");
+    		}else {
+    			item.setGrade(dto.getGrade().split("\\.")[0]);
+    		}
     	}else {
     		if(null != dto.getGrade())	
     			item.setGrade(dto.getGrade());

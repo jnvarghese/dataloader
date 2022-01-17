@@ -21,10 +21,8 @@ public class SponsorWriter implements ItemWriter<Sponsor> {
     
     @Override
     public void write(List<? extends Sponsor> items) throws Exception {
-        //LOGGER.info("Received the information of {} students", items.size());
-
-       items.forEach(i -> LOGGER.debug("Received the information of a Sponsor: {}", i.getFirstName(), i.getLastName(),
-    		   i.getErn().getPaymentDate(), i.getErn().getEffectiveDate(), i.getErn().getSponsees(), i.getSponsorMaxOuts()));
+       //LOGGER.info("Received the information of {} students", items.size());
+       items.forEach(i -> LOGGER.debug("Received the information of a Sponsor: {}", i.getFirstName(), i.getLastName()));
         
         for(Sponsor dto : items) {
         	//receiptDAO.save(dto.getErn().getReceipt());

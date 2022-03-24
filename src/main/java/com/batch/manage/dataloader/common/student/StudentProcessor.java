@@ -1,5 +1,9 @@
 package com.batch.manage.dataloader.common.student;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,9 +81,9 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
 	    	item.setDateOfBirth(df.format(new Date(Long.valueOf(dto.getDateOfBirth()))));
 	    }
     	
-    	if("MALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
+    	if("M".equalsIgnoreCase(dto.getGender().trim()) || "MALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
     		item.setGender("M");
-    	}else if("FEMALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
+    	}else if("F".equalsIgnoreCase(dto.getGender().trim()) || "FEMALE".toLowerCase().equals(dto.getGender().trim().toLowerCase())) {
     		item.setGender("F");
     	}else {
     		LOGGER.warn(" Invalid gender {} for child {} , refer job {}", dto.getGender(), dto.getNameOfChild(), this.jobId);
@@ -115,6 +119,24 @@ public class StudentProcessor implements ItemProcessor<StudentDTO, Student> {
     	if(null != dto.getTalent())
     		item.setTalent(dto.getTalent());    
     	item.setCreatedBy(1L);
+    	
+    	
+    	URL url = new URL(dto.getAddLinkForPicture());
+    	InputStream in = new BufferedInputStream(url.openStream());
+    	ByteArrayOutputStream out = new ByteArrayOutputStream();
+    	byte[] buf = new byte[1024];
+    	int n = 0;
+    	while (-1!=(n=in.read(buf)))
+    	{
+    	   out.write(buf, 0, n);
+    	}
+    	out.close();
+    	in.close();
+    	item.setImage(out.toByteArray());
+    	
+    	//s3://studentprofilepictures/20/1930.png
+    		
+    	//s3://studentprofilepictures/20/1930.png
     	//item.setProfilePicture(dto.getAddLinkForPicture());
     	//item.setImageLinkRef(dto.getAddLinkForPicture());
         return item;

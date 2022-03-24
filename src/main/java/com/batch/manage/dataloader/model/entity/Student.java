@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Student {
@@ -67,6 +68,18 @@ public class Student {
 	
 	private String status;
 	
+	private String uploadstatus;
+	
+	
+	
+	public String getUploadstatus() {
+		return uploadstatus;
+	}
+
+	public void setUploadstatus(String uploadstatus) {
+		this.uploadstatus = uploadstatus;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -234,6 +247,18 @@ public class Student {
 
 	public void setImageLinkRef(String imageLinkRef) {
 		this.imageLinkRef = imageLinkRef;
+	}
+
+	@Transient
+	private byte[] image;
+	
+	
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	@Override

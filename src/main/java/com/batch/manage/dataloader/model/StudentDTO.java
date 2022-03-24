@@ -36,8 +36,9 @@ public class StudentDTO {
 	
 	private String recentAchivements;
 	
-	private byte[] addLinkForPicture;
+	private String addLinkForPicture;
 
+	
 
 	public String getCode() {
 		return code;
@@ -161,15 +162,7 @@ public class StudentDTO {
 		this.recentAchivements = recentAchivements;
 	}
 
-	
 
-	public byte[] getAddLinkForPicture() {
-		return addLinkForPicture;
-	}
-
-	public void setAddLinkForPicture(byte[] addLinkForPicture) {
-		this.addLinkForPicture = addLinkForPicture;
-	}
 
 	public String getProjectLocation() {
 		return projectLocation;
@@ -179,6 +172,16 @@ public class StudentDTO {
 		this.projectLocation = projectLocation;
 	}
 
+	public String getAddLinkForPicture() {
+		return addLinkForPicture;
+	}
+
+	public void setAddLinkForPicture(String addLinkForPicture) {
+		this.addLinkForPicture = addLinkForPicture;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "StudentDTO [code=" + code + ", studentId=" + studentId + ", nameOfChild=" + nameOfChild + ", gender="
@@ -186,8 +189,9 @@ public class StudentDTO {
 				+ ", nameOfParent=" + nameOfParent + ", occupationOfParent=" + occupationOfParent + ", motherTongue="
 				+ motherTongue + ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", hobby=" + hobby
 				+ ", projectLocation=" + projectLocation + ", talent=" + talent + ", recentAchivements="
-				+ recentAchivements + ", addLinkForPicture=" + Arrays.toString(addLinkForPicture) + "]";
+				+ recentAchivements + ", addLinkForPicture=" + addLinkForPicture + "]";
 	}
+
 
 	
     

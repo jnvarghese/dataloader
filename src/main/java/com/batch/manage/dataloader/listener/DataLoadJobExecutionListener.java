@@ -76,7 +76,7 @@ public class DataLoadJobExecutionListener implements JobExecutionListener {
 					//jobExecution.getExecutionContext().put("data", s3Wrapper.downloadDataFile(list.get(0).getUploaduri()));
 				//}
 				
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			//jobExecution.getExecutionContext().put("data", list.get(0).getFileData());

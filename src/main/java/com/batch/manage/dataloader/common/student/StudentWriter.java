@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.batch.manage.dataloader.common.s3.S3Wrapper;
 import com.batch.manage.dataloader.model.entity.Student;
 import com.batch.manage.dataloader.service.StudentDAO;
 
@@ -16,6 +18,9 @@ public class StudentWriter implements ItemWriter<Student> {
     
     @Autowired
     private StudentDAO studentDAO;
+    
+    @Autowired
+	S3Wrapper s3Wrapper;
 
     @Override
     public void write(List<? extends Student> items) throws Exception {
@@ -25,6 +30,15 @@ public class StudentWriter implements ItemWriter<Student> {
         
         for(Student dto : items) {
         	studentDAO.save(dto);
+        	try {
+				PutObjectResult result = s3Wrapper.upload(dto.getImage(), dto.getId(), dto.getImageLinkRef(), dto.getProjectId(), "2");
+				dto.setUploadstatus("Y");
+			} catch (Exception e) {
+				LOGGER.error("Unable to upload student picture "+dto.getId());
+				e.printStackTrace();
+			}
+        	
+        	
         }
     }
 
